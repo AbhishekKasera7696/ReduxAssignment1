@@ -39,12 +39,19 @@ const Home = () => {
     }).then((res) => getTodos());
   };
 
-  const handleToggle = (id, title) => {
+  const handleToggle = (id, title,status) => {
+      let mode;
 
+      if(status===false){
+        mode = true
+      }
+      else{
+        mode = false
+      }
     const fix = {
         title: title,
         id: id,
-        status: true
+        status: mode
     }
 
     fetch(`http://localhost:3002/todos/${id}`, {
@@ -74,7 +81,7 @@ const Home = () => {
             style={{ display: "flex", width: "50%", margin: "auto" }}
           >
             {item.title} - {item.status ? "Completed" : "Not Completed"}
-            <button onClick={() => handleToggle(item.id, item.title)}>Toggle</button>
+            <button onClick={() => handleToggle(item.id, item.title, item.status)}>Toggle</button>
             {<Link to={`/todos/${item.id}`}>More Details</Link>}
             <button onClick={() => handleDelete(item.id)}>Delete</button>
           </div>
